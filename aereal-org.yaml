@@ -1,0 +1,16 @@
+---
+resources:
+  -
+    name: aereal-org-bucket
+    type: storage.v1.bucket
+    properties:
+      location: asia-northeast1
+      website:
+        mainPageSuffix: 'index.html'
+      acl:
+        -
+          kind: 'storage#objectAccessControl'
+          id: public
+          bucket: aereal-org-bucket
+          entity: allUsers
+          role: READER
