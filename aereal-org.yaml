@@ -27,3 +27,23 @@ resources:
     properties:
       ipVersion: IPV4
       addressType: EXTERNAL
+  -
+    name: aereal-org-url-map
+    type: compute.v1.urlMap
+    properties:
+      defaultService: $(ref.aereal-org-backend-bucket.selfLink)
+  -
+    name: aereal-org-lb-http-proxy
+    type: compute.v1.targetHttpProxy
+    properties:
+      urlMap: $(ref.aereal-org-url-map.selfLink)
+  -
+    name: aereal-org-lb-global-forwarding-rule-http-v4
+    type: compute.v1.globalForwardingRule
+    properties:
+      IPAddress: $(ref.aereal-org-lb-ip-v4.address)
+      IPProtocol: TCP
+      portRange: 80
+      loadBalancingScheme: EXTERNAL
+      target: $(ref.aereal-org-lb-http-proxy.selfLink)
+      region: asia-northeast1
