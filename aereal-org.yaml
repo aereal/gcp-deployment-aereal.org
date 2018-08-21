@@ -1,49 +1,9 @@
 ---
+imports:
+  -
+    path: ./aereal-org.jinja
+
 resources:
   -
-    name: aereal-org-bucket
-    type: storage.v1.bucket
-    properties:
-      location: asia-northeast1
-      website:
-        mainPageSuffix: 'index.html'
-      acl:
-        -
-          kind: 'storage#objectAccessControl'
-          id: public
-          bucket: aereal-org-bucket
-          entity: allUsers
-          role: READER
-  -
-    name: aereal-org-backend-bucket
-    type: compute.beta.backendBucket
-    properties:
-      name: aereal-org-backend-bucket
-      bucketName: $(ref.aereal-org-bucket.name)
-      enableCdn: true
-  -
-    name: aereal-org-lb-ip-v4
-    type: compute.v1.globalAddress
-    properties:
-      ipVersion: IPV4
-      addressType: EXTERNAL
-  -
-    name: aereal-org-url-map
-    type: compute.v1.urlMap
-    properties:
-      defaultService: $(ref.aereal-org-backend-bucket.selfLink)
-  -
-    name: aereal-org-lb-http-proxy
-    type: compute.v1.targetHttpProxy
-    properties:
-      urlMap: $(ref.aereal-org-url-map.selfLink)
-  -
-    name: aereal-org-lb-global-forwarding-rule-http-v4
-    type: compute.v1.globalForwardingRule
-    properties:
-      IPAddress: $(ref.aereal-org-lb-ip-v4.address)
-      IPProtocol: TCP
-      portRange: 80
-      loadBalancingScheme: EXTERNAL
-      target: $(ref.aereal-org-lb-http-proxy.selfLink)
-      region: asia-northeast1
+    name: aereal-org
+    type: ./aereal-org.jinja
