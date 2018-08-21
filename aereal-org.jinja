@@ -47,3 +47,28 @@ resources:
       loadBalancingScheme: EXTERNAL
       target: $(ref.aereal-org-lb-http-proxy.selfLink)
       region: asia-northeast1
+  -
+    name: aereal-org-lb-global-forwarding-rule-https-v4
+    type: compute.v1.globalForwardingRule
+    properties:
+      IPAddress: $(ref.aereal-org-lb-ip-v4.address)
+      IPProtocol: TCP
+      portRange: 443
+      loadBalancingScheme: EXTERNAL
+      target: $(ref.aereal-org-lb-https-proxy.selfLink)
+      region: asia-northeast1
+  -
+    name: aereal-org-lb-https-proxy
+    type: compute.v1.targetHttpsProxy
+    properties:
+      urlMap: $(ref.aereal-org-url-map.selfLink)
+      sslCertificates:
+        - $(ref.aereal-org-ssl-certificates.selfLink)
+  -
+    name: aereal-org-ssl-certificates
+    type: compute.v1.sslCertificate
+    properties:
+      certificate: |
+        {{ imports["certs/fullchain.pem.txt"] | indent(8) }}
+      privateKey: |
+        {{ imports["certs/privkey.pem.txt"] | indent(8) }}

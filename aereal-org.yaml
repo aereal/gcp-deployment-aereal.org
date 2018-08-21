@@ -2,6 +2,10 @@
 imports:
   -
     path: ./aereal-org.jinja
+  -
+    path: certs/fullchain.pem.txt
+  -
+    path: certs/privkey.pem.txt
 
 resources:
   -
