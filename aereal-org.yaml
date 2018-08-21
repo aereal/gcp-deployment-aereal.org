@@ -21,3 +21,9 @@ resources:
       name: aereal-org-backend-bucket
       bucketName: $(ref.aereal-org-bucket.name)
       enableCdn: true
+  -
+    name: aereal-org-lb-ip-v4
+    type: compute.v1.globalAddress
+    properties:
+      ipVersion: IPV4
+      addressType: EXTERNAL
